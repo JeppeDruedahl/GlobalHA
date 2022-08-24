@@ -1,0 +1,5011 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass article
+\begin_preamble
+% general
+\usepackage[titletoc]{appendix}
+\usepackage{graphicx}
+\usepackage{placeins}
+\usepackage{tikz}
+\usepackage{enumitem}
+\setlist[enumerate]{align=parleft,left=10pt..30pt}
+
+% algorithm
+\usepackage[ruled,vlined,linesnumbered]{algorithm2e}
+\IncMargin{2.5cm}
+\DecMargin{2cm}
+\usepackage{fullwidth}
+\usepackage{enumitem}
+\setlist{leftmargin=1.7cm}
+
+% tables
+\usepackage{tabularx, siunitx, multirow, booktabs}
+\begingroup
+% Allow `_` and `:` in macro names (LaTeX3 style)
+\catcode`\_=11
+\catcode`\:=11
+% Internal code of `S`
+\gdef\tabularxcolumn#1{%
+    >{\__siunitx_table_collect_begin:Nn S{} }%
+    p{#1}%  <- this is different (is `c` in normal `S`)
+    <{\__siunitx_table_print:}%
+}
+\endgroup
+
+% figures
+\usepackage{subfig}
+\usepackage{caption}
+\captionsetup[subfloat]{position=top}
+
+% footnotes
+\setlength{\skip\footins}{1cm}
+\usepackage[hang,splitrule]{footmisc}
+\setlength{\footnotemargin}{0.3cm} %.5
+\setlength{\footnotesep}{0.4cm}
+
+% links
+\hypersetup{colorlinks=true,citecolor=blue}
+\hypersetup{colorlinks=true,linkcolor=blue}
+\hypersetup{colorlinks=true,urlcolor=blue}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "palatino" "default"
+\font_sans "default" "default"
+\font_typewriter "default" "default"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100 100
+\font_tt_scale 100 100
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize 12
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry true
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine natbib
+\cite_engine_type authoryear
+\biblio_style plainnat
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date true
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 3cm
+\topmargin 3cm
+\rightmargin 3cm
+\bottommargin 3cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation skip
+\defskip smallskip
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style danish
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+
+\series bold
+Global Solutions of Heterogeneous Agent Models with Non-linear Aggregate
+ Dynamics
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+We are grateful for helpful comments from Patrick Moran, Søren Hove Ravn
+ and Nicolai Waldstrøm.
+ Center for Economic Behavior and Inequality (CEBI) is a center of excellence
+ at the University of Copenhagen, founded in September 2017, financed by
+ a grant from the Danish National Research Foundation, Grant DNRF134.
+ All errors are our own.
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Author
+Jeppe Druedahl
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+University of Copenhagen and CEBI.
+ 
+\begin_inset CommandInset href
+LatexCommand href
+name "jeppe.druedahl@econ.ku.dk"
+target "jeppe.druedahl@econ.ku.dk"
+type "mailto:"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+Emil Holst Partsch
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+University of Copenhagen and Danmarks Nationalbank.
+ 
+\begin_inset CommandInset href
+LatexCommand href
+name "ehp@econ.ku.dk"
+target "ehp@econ.ku.dk"
+type "mailto:"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+In this paper, we present and evaluate global solution methods for heterogeneous
+ agent models with non-linear aggregate dynamics.
+ We consider models with weak approximate aggregation, where the aggregate
+ dynamics can be summarized with a small number of states.
+ We allow the perceived law-of-motion the agents use for now- and forecasting
+ to be non-linear, and do not impose any parametric restrictions on it.
+ Specifically, we derive the perceived law-of-motion using either a 
+\emph on
+neural net
+\emph default
+ or 
+\emph on
+radial basic function interpolation
+\emph default
+.
+ Both methods deliver precise global solutions, but radial basis function
+ interpolation is faster because of a slow training step for the neural
+ net, and more stable in terms of ensuring convergence.
+ We are able to globally solve our benchmark model with an aggregate non-lineari
+ty and period-by-period market clearing in less than 15 minutes on a desktop
+ computer.
+\end_layout
+
+\begin_layout Abstract
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+vspace{2mm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+addtocounter{page}{-1}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Introduction
+\end_layout
+
+\begin_layout Standard
+Recently, a burgeoning literature incorporating explicit heterogeneity into
+ business cycle model has come to the forefront of modern macroeconomics.
+ This literature shows that introducing such heterogeneity may radically
+ alter transmission mechanisms and dynamics relative to comparable representativ
+e agent economies.
+ The standard approach is to use 
+\emph on
+local
+\emph default
+ solution methods.
+ These are generally fast, but can miss central model dynamics due to exogenous
+ non-linearities or strong internal propagation and feedback loops.
+ 
+\emph on
+Global
+\emph default
+ solution methods are typically more complicated and slower, but allow us
+ to study a broader range of economic questions.
+ For example, a global solution is necessary to study both the response
+ of precautionary saving and portfolio choice to aggregate risk, and the
+ state dependence of impulse responses form shocks and economic policies.
+\end_layout
+
+\begin_layout Standard
+The first methods for solving heterogeneous agent models globally were presented
+ in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "den_haan_heterogeneity_1996,den_haan_solving_1997"
+literal "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "krusell_incoem_1997,krusell_income_1998"
+literal "false"
+
+\end_inset
+
+.
+ The resulting literature was later evaluated in a special issue of 
+\emph on
+Journal of Economics Dynamics and Control
+\emph default
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "den_haan_comparison_2010"
+literal "false"
+
+\end_inset
+
+
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+For this paper, the two step approach used in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "maliar_solving_2010"
+literal "false"
+
+\end_inset
+
+, and the non-stochastic simulation method developed in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "young_solving_2010"
+literal "false"
+
+\end_inset
+
+ (see also 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "tan_fast_2020"
+literal "false"
+
+\end_inset
+
+), are in particular relevant.
+\end_layout
+
+\end_inset
+
+ and surveyed in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "algan_chapter_2014"
+literal "false"
+
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "terry_alternative_2017"
+literal "false"
+
+\end_inset
+
+ for a survey on methods for solving heterogeneous firm models.
+\end_layout
+
+\end_inset
+
+ A central insight from this line of work was that the dynamics of the macroecon
+omic aggregates could be modeled in terms of only the mean of the wealth
+ distribution.
+ This is generally referred to as »approximate aggregation«.
+ In this paper, we rely on a 
+\emph on
+weaker
+\emph default
+ version of approximate aggregation, where we only assume that the aggregate
+ dynamics can be modeled in terms of a small number of aggregate states.
+ We also deviate from the standard assumption of linear or log-linear aggregate
+ dynamics, allowing the perceived law-of-motion agents use for forecasting
+ to be non-linear.
+ This is important because a full global solution is not needed as soon
+ as aggregate dynamics are approximately linear.
+ If aggregate dynamics are instead linear, one can instead rely on early
+ contributions in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "reiter_recursive_2002,reiter_solving_2009,reiter_approximate_2010"
+literal "false"
+
+\end_inset
+
+ and efficient first order solution methods developed in state-space form
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "bayer_solving_2020"
+literal "false"
+
+\end_inset
+
+ and in sequence-space form 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "auclert_using_2021"
+literal "false"
+
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+See also 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "ahn_when_2018,boppart_exploiting_2018,winberry_method_2018,bilal_solving_2021"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Our proposed solution method is a variant of the standard Krusell-Smith
+ algorithm.
+ The major difference is that we allow the perceived laws-of-motion (PLMs)
+ the agents use for now- and forecasting to be non-linear, and do not impose
+ any parametric restrictions on them.
+ Specifically, we derive the perceived law-of-motion using either a neural
+ net or radial basic function interpolation.
+ We formulate the perceived-laws-of-motion such that it should hold exactly
+ in the limit of no approximation errors.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+This differs from the implementation of the Krusell-Smith method for a Heterogen
+eous Agent New Keynesian (HANK) model in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "bayer_precautionary_2019"
+literal "false"
+
+\end_inset
+
+, where one of the PLMs is for a variable with an expectation term.
+ Errors should then only be zero 
+\emph on
+on average
+\emph default
+.
+\end_layout
+
+\end_inset
+
+ This allows us to reap the full gains of the local flexibility of our function
+ approximation methods.
+ Additionally, we formulate the household problem such that period-by-period
+ market clearing is a pure interpolation problem on already derived policy
+ functions.
+ This provides additional speed-up.
+ We apply our method to a Heterogeneous Agents Neo-Classical (HANC) model
+ with adjustable technology utilization subject to an upper bound and capital
+ adjustment costs.
+\end_layout
+
+\begin_layout Standard
+Our paper is complementary to 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "fernandez-villaverde_inequality_2021"
+literal "false"
+
+\end_inset
+
+, who use the method from 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "fernandez-villaverde_financial_2020"
+literal "false"
+
+\end_inset
+
+ to solve a Heterogeneous Agent New Keynesian (HANK) model with an occasionally
+ binding zero lower bound using a neural net for the perceived laws-of-motion.
+ In line with their results, assuming linear laws of motion results in higher
+ than acceptable forecast errors.
+ Instead, we propose using radial basis function interpolation for the PLMs
+ to solve the model globally, which is stable, accurate, and fast.
+ Specifically, using our benchmark model, we can find the full global solution
+ in less than 15 minutes on a desktop computer using radial basic function
+ interpolation.
+ This is slightly slower than linear PLMs, but orders of magnitude more
+ precise.
+ Instead, using a neural net to generate PLMs is slower and less precise
+ than using radial basis function interpolation, and in some cases, we face
+ a lack of convergence.
+\end_layout
+
+\begin_layout Standard
+The proposed solution method is easy to implement and Python code for all
+ results in the paper is provided at 
+\begin_inset CommandInset href
+LatexCommand href
+name "github.com/JeppeDruedahl/GlobalHA"
+target "https://github.com/JeppeDruedahl/GlobalHA"
+literal "false"
+
+\end_inset
+
+.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+We build on top of the Python package 
+\begin_inset CommandInset href
+LatexCommand href
+name "GEModelTools"
+target "https://github.com/NumEconCopenhagen/GEModelTools"
+literal "false"
+
+\end_inset
+
+, which we have developed for computing local solutions to heterogeneous
+ agent models using the sequence-space method from 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "auclert_using_2021"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Finally, our paper is related to the recent literature on using artificial
+ intelligence algorithms for solving general equilibrium models with heterogeneo
+us agents 
+\begin_inset CommandInset citation
+LatexCommand citep
+key "maliar_deep_2020,gorodnichenko_household_2021,hill_solving_2021,maliar_deep_2021,valaitis_machine_2021,azinovic_deep_2022,curry_finding_2022,han_deepham_2022"
+literal "false"
+
+\end_inset
+
+.
+ These methods are designed to also alleviate the cost of solving each agent's
+ dynamic programming problem.
+ This is particularly relevant when there are many aggregate states, as
+ even our weak version of approximate aggregation fails in that case.
+ Our paper focuses on non-linear but lower dimensional problems and can
+ therefore rely on much simpler algorithms.
+\end_layout
+
+\begin_layout Standard
+The paper is structured as follows.
+ Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Solution-Method"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ presents the overall solution method.
+ Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:HANC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ presents our benchmark model.
+ The main results are presented in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Results"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and additional results for a model without capital adjustment costs are
+ presented in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Results-with-no"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Conclusion"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ concludes.
+\end_layout
+
+\begin_layout Section
+Solution Method
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Solution-Method"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Setup.
+\end_layout
+
+\begin_layout Standard
+To present our solution method in quasi-general terms, before turning to
+ our benchmark model in the following section, we consider a heterogeneous
+ agents model with a single endogenous state and a single continuous choice.
+ The approximate household problem then is
+\begin_inset Formula 
+\begin{align}
+\tilde{v}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},a_{t-1}) & =\max_{a_{t},c_{t}}u(c_{t})+\beta\mathbb{E}_{t}\left[\tilde{v}(\boldsymbol{Z}_{t+1},\boldsymbol{S}_{t},\boldsymbol{z}_{t+1},a_{t})\right]\label{eq:bellman}\\
+ & \text{s.t.}\nonumber \\
+\boldsymbol{S}_{t},\boldsymbol{P}_{t} & =\text{PLM}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1})\nonumber \\
+a_{t}+c_{t} & =m(\boldsymbol{z}_{t},a_{t-1},\boldsymbol{P}_{t})\nonumber \\
+\boldsymbol{z}_{t+1} & \sim\Gamma_{z}(\boldsymbol{z}_{t})\nonumber \\
+\boldsymbol{Z}_{t+1} & \sim\Gamma_{Z}(\boldsymbol{Z}_{t})\nonumber \\
+a_{t} & \geq-b,\nonumber 
+\end{align}
+
+\end_inset
+
+where
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\boldsymbol{Z}_{t}$
+\end_inset
+
+ are exogenous aggregate shocks.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\boldsymbol{S}_{t-1}$
+\end_inset
+
+ are pre-determined (finite dimensional) aggregate states.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\boldsymbol{P}_{t}$
+\end_inset
+
+ are 
+\begin_inset Quotes ald
+\end_inset
+
+prices
+\begin_inset Quotes ard
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\text{PLM}(\bullet)$
+\end_inset
+
+ is the 
+\emph on
+Perceived-Law-of-Motion
+\emph default
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $\boldsymbol{z}_{t}$
+\end_inset
+
+ is stochastic and exogenous idiosyncratic states.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $c_{t}$
+\end_inset
+
+ is consumption providing utility 
+\begin_inset Formula $u(c_{t})$
+\end_inset
+
+ discounted by 
+\begin_inset Formula $\beta$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $a_{t}$
+\end_inset
+
+ is end-of-period assets (borrowing constraint given by 
+\begin_inset Formula $b$
+\end_inset
+
+).
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $m(\bullet)$
+\end_inset
+
+ is cash-on-hand with 
+\begin_inset Formula $\frac{\partial m(\bullet)}{\partial a_{t-1}}>0$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+This problem is approximate because the distribution of households, 
+\begin_inset Formula $\boldsymbol{D}_{t}$
+\end_inset
+
+, over the idiosyncratic states 
+\begin_inset Formula $\boldsymbol{z}_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $a_{t-1}$
+\end_inset
+
+, are 
+\emph on
+not 
+\emph default
+included as a state.
+ In the true model, the distribution matters for determining both current
+ and future aggregate states and prices.
+ In the approximation, this is instead captured by a finite number of aggregate
+ states, 
+\begin_inset Formula $\boldsymbol{S}_{t}$
+\end_inset
+
+.
+ These can, however, be functions of the distribution.
+\end_layout
+
+\begin_layout Standard
+The PLM must be specified to let the household update the aggregate states,
+ 
+\begin_inset Formula $\boldsymbol{S}_{t}$
+\end_inset
+
+, and infer all the prices, 
+\begin_inset Formula $\boldsymbol{P}_{t}$
+\end_inset
+
+, in their budget constraint.
+ The PLM must be consistent with all aggregate model relationship, where
+ expectation terms can be evaluated with e.g.
+ a quadrature method and using that 
+\begin_inset Formula $\boldsymbol{Z}_{t+1}\sim\Gamma_{Z}(\boldsymbol{Z}_{t})$
+\end_inset
+
+ is known.
+ In general, the PLM is therefore allowed to take the form
+\begin_inset Formula 
+\begin{equation}
+\text{PLM}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1})=\mathbb{E}\left[f(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{Z}_{t+1};\Psi)\,|\,\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1}\right],\label{eq:PLM}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ are parameters to be determined.
+ In the benchmark model, we specify the PLM without an expectation term,
+ but when searching for market clearing prices we use that an expectation
+ term can be evaluated.
+\end_layout
+
+\begin_layout Standard
+Importantly, the law-of-motion the PLM is approximating is fully 
+\emph on
+deterministic
+\emph default
+, and there is therefore no bias-variance trade-off when estimating it from
+ data on states, 
+\begin_inset Formula $\boldsymbol{S}_{t}$
+\end_inset
+
+, shocks, 
+\begin_inset Formula $\boldsymbol{Z}_{t}$
+\end_inset
+
+, and prices 
+\begin_inset Formula $\boldsymbol{P}_{t}$
+\end_inset
+
+.
+ In other word, there is no fundamental over-fitting risk in letting 
+\begin_inset Formula $f(\bullet)$
+\end_inset
+
+ have infinitely many degrees of freedom, and it can therefore be modeled
+ with a neural net or radial basis function interpolation.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+In the presence of approximation errors some over-fitting is possible.
+ A stochastic simulation might result in differences in outputs, 
+\begin_inset Formula $\boldsymbol{P}_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{S}_{t}$
+\end_inset
+
+, for (almost) the same inputs, 
+\begin_inset Formula $\boldsymbol{Z}_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{S}_{t-1}$
+\end_inset
+
+.
+ In this case it might therefore be valuable to introduce some smoothing,
+ by restricting 
+\begin_inset Formula $f(\bullet$
+\end_inset
+
+) in some way to even this out.
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Standard
+An 
+\emph on
+equilibrium condition
+\emph default
+ is that the PLM is (approximately) self-consistent in terms of the implied
+ dynamics.
+ I.e.
+ as the household observes simulated data, it should not be able to improve
+ forecast errors by updating 
+\begin_inset Formula $\Psi$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph*
+Household solution and simulation.
+\end_layout
+
+\begin_layout Standard
+The approximate household problem can be solved with an endogenous-grid-method
+ as
+\begin_inset Formula 
+\begin{align}
+q(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},a_{t}) & =\mathbb{E}\left[v_{a}(\boldsymbol{Z}_{t+1},\boldsymbol{S}_{t},\boldsymbol{z}_{t+1},a_{t})\right]\label{eq:egm}\\
+\tilde{c}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},a_{t}) & =(\beta q(\bullet))^{-\frac{1}{\sigma}}\nonumber \\
+\tilde{m}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},a_{t}) & =a_{t}+c(\bullet)\nonumber \\
+c^{\star}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},a_{t-1}) & =\text{interp }\tilde{m}(\bullet)\rightarrow\tilde{c}(\bullet)\text{ at }m(\boldsymbol{z}_{t},a_{t-1},\boldsymbol{P}_{t})\nonumber \\
+a^{\star}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},a_{t-1}) & =m(\bullet)-c^{\star}(\bullet)\nonumber \\
+v_{a}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},a_{t-1}) & =\frac{\partial m(\bullet)}{\partial a_{t-1}}c^{\star}(\bullet)^{-\sigma}.\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next, define the associated cash-on-hand savings function by
+\begin_inset Formula 
+\begin{align}
+a^{\star}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},m_{t}) & =a^{\star}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},a_{t-1})\label{eq:a_m}\\
+ & a_{t-1}=m^{-1,a}(m_{t},\boldsymbol{z}_{t},\boldsymbol{P}_{t}).\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The distribution of households can be simulated forward using either Monte
+ Carlo simulation or the non-stochastic histogram method from 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "young_solving_2010"
+literal "false"
+
+\end_inset
+
+, which we prefer here.
+\end_layout
+
+\begin_layout Paragraph*
+Aggregate simulation.
+\end_layout
+
+\begin_layout Standard
+For pre-determined 
+\begin_inset Formula $\boldsymbol{D}_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $\boldsymbol{Z}_{-1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{S}_{-1}$
+\end_inset
+
+, and the savings policy function 
+\begin_inset Formula $a^{\star}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},m_{t})$
+\end_inset
+
+, the model can be simulated for 
+\begin_inset Formula $t\in\{0,\dots,T\}$
+\end_inset
+
+ by the following period-by-period three step procedure
+\end_layout
+
+\begin_layout Enumerate
+Draw 
+\begin_inset Formula $\boldsymbol{Z}_{t}$
+\end_inset
+
+ given 
+\begin_inset Formula $\boldsymbol{Z}_{t-1}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+Find 
+\begin_inset Formula $a_{t}^{\star}(\boldsymbol{z}_{t},m_{t})=a^{\star}(\boldsymbol{Z}_{t},\boldsymbol{S}_{t-1},\boldsymbol{z}_{t},m_{t})$
+\end_inset
+
+ by interpolation over 
+\begin_inset Formula $\boldsymbol{Z}_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{S}_{t-1}$
+\end_inset
+
+;
+\end_layout
+
+\begin_layout Enumerate
+Search for 
+\begin_inset Formula $\boldsymbol{P}_{t}$
+\end_inset
+
+ so 
+\begin_inset Formula $\int a_{t}^{\star}(\boldsymbol{z}_{t},m(\boldsymbol{z}_{t},a_{t-1},\boldsymbol{P}_{t}))d\boldsymbol{D}_{t}$
+\end_inset
+
+ clears the savings market.
+\end_layout
+
+\begin_layout Standard
+A potential computational bottleneck is step 3.
+ A central benefit of the formulation we use here is that the search for
+ market clearing prices only involves interpolating an already known policy
+ function.
+ Typically, a large number of simulation periods is needed, say 
+\begin_inset Formula $5,000$
+\end_inset
+
+, and therefore small computational costs quickly accumulate.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+In models with additional endogenous states and continuous and discrete
+ choices, clearing the market easily becomes a computational bottleneck.
+ See 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "bakota_avoiding_2022"
+literal "false"
+
+\end_inset
+
+ for a method to avoid finding market clearing prices period-by-period.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Aggregate solution.
+\end_layout
+
+\begin_layout Standard
+The PLM can be found from a fixed-pointed iteration with relaxation as
+\end_layout
+
+\begin_layout Enumerate
+Draw shocks to be used in all simulations
+\end_layout
+
+\begin_layout Enumerate
+Solve and simulate a linearized version of the model
+\end_layout
+
+\begin_layout Enumerate
+Estimate the PLM on the simulated data
+\end_layout
+
+\begin_layout Enumerate
+Given the PLM compute 
+\begin_inset Formula $\breve{\boldsymbol{S}}^{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $\breve{\boldsymbol{P}}^{0}$
+\end_inset
+
+ on the grid of 
+\begin_inset Formula $\boldsymbol{Z}_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{S}_{t-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Set the PLM convergence iteration counter 
+\begin_inset Formula $n=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Solve the approximate household problem given 
+\begin_inset Formula $\breve{\boldsymbol{S}}^{n}$
+\end_inset
+
+ and 
+\begin_inset Formula $\breve{\boldsymbol{P}}^{n}$
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Enumerate
+Simulate the model given household behavior
+\end_layout
+
+\begin_layout Enumerate
+Estimate the PLM on the simulated data
+\end_layout
+
+\begin_layout Enumerate
+Given the PLM compute 
+\begin_inset Formula $\breve{\boldsymbol{S}}_{NEW}$
+\end_inset
+
+ and 
+\begin_inset Formula $\breve{\boldsymbol{P}}_{NEW}$
+\end_inset
+
+ on the grid of 
+\begin_inset Formula $\boldsymbol{Z}_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{S}_{t-1}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Stop if 
+\begin_inset Formula $|\breve{\boldsymbol{S}}_{NEW}-\breve{\boldsymbol{S}}^{n}|_{\infty}<\text{tol.}$
+\end_inset
+
+ and 
+\begin_inset Formula $|\breve{\boldsymbol{P}}_{NEW}-\breve{\boldsymbol{P}}^{n}|_{\infty}<\text{tol.}$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Update 
+\begin_inset Formula $\breve{\boldsymbol{S}}$
+\end_inset
+
+ and 
+\begin_inset Formula $\breve{\boldsymbol{P}}$
+\end_inset
+
+ by relaxation with 
+\begin_inset Formula $\omega\in(0,1)$
+\end_inset
+
+
+\begin_inset Formula 
+\begin{align*}
+\breve{\boldsymbol{S}}^{s+1} & =\omega\breve{\boldsymbol{S}}_{NEW}+(1-\omega)\breve{\boldsymbol{S}}^{s}\\
+\breve{\boldsymbol{P}}^{s+1} & =\omega\breve{\boldsymbol{P}}_{NEW}+(1-\omega)\breve{\boldsymbol{P}}^{s}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+Increment 
+\begin_inset Formula $n$
+\end_inset
+
+ and return to step 6
+\end_layout
+
+\begin_layout Standard
+The convergence criteria in step 10 and the relaxation in step 11 is done
+ in terms of the evaluated values of the PLM on the grid.
+ This ensures that the relaxation is done on the inputs to the household
+ problem.
+ The standard approach of iterating on the parameters 
+\emph on
+inside
+\emph default
+ the PLM is less appealing when the PLM is non-linear in these parameters.
+ It would then not be ensured that a relaxation scheme in terms of averages
+ of current and past parameters would imply smooth changes in the inputs
+ to the household problem.
+\end_layout
+
+\begin_layout Standard
+The potential computational bottlenecks in the algorithm are in steps 6-8.
+ The computational challenges in finding the market clearing prices in step
+ 7 were discussed above.
+ The computational complexity of the household problem in step 6 is increasing
+ in the number of aggregate shocks and states due to the curse of dimensionality
+, and their combined number must therefore be small.
+ For simplicity, we here consider tensor product grids and multi-linear
+ interpolation.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The presence of aggregate non-linearities makes global interpolation methods
+ problematic.
+ A speed-up could, however, probably be achieved with adaptive sparse grids
+ 
+\begin_inset CommandInset citation
+LatexCommand citep
+before "see e.g. "
+key "brumm_using_2017,brumm_sparse_2021,eftekhari_high-dimensional_2022"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\end_inset
+
+ The computational complexity of the estimation in step 8 will depend on
+ the chosen function approximation method for the PLM.
+ It will be negligible, when the parameters in the PLM can be estimated
+ with a simple linear regression, but can increase substantially if training
+ of a neural net is required, as discussed later.
+\end_layout
+
+\begin_layout Paragraph*
+Functional approximation methods.
+\end_layout
+
+\begin_layout Standard
+The choice of functional approximation method used for the PLM is central.
+ We consider tree different approaches:
+\end_layout
+
+\begin_layout Enumerate
+Linear regression (short: OLS)
+\end_layout
+
+\begin_layout Enumerate
+Neural net with a single layer (short: NN)
+\end_layout
+
+\begin_layout Enumerate
+Radial basis function interpolation (short: RBF)
+\end_layout
+
+\begin_layout Standard
+To describe these, let 
+\begin_inset Formula $X_{it}\in\mathbf{Z}_{t},\mathbf{S_{t-1}}$
+\end_inset
+
+ denote the 
+\begin_inset Formula $i$
+\end_inset
+
+'th input to the PLM for 
+\begin_inset Formula $i\in\{1,\dots,\#_{ZS}\}$
+\end_inset
+
+ and let 
+\begin_inset Formula $Y_{jt}\in\boldsymbol{S}_{t},\boldsymbol{P}_{t}$
+\end_inset
+
+ denote the 
+\begin_inset Formula $j$
+\end_inset
+
+'th output for 
+\begin_inset Formula $j\in\{1,\dots,\#_{SP}\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For 
+\emph on
+linear regression, 
+\emph default
+we have
+\begin_inset Formula 
+\begin{equation}
+Y_{jt}=\Psi_{j0}+\sum_{i=1}^{\#_{ZS}}\Psi_{ji}X_{it}.\label{eq:PLM_linear}
+\end{equation}
+
+\end_inset
+
+Estimation of 
+\begin_inset Formula $\Psi$
+\end_inset
+
+ is straightforward with OLS.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+Technically, it is straightforward to include non-linear terms.
+ For a specific model in question, it is, however, not a priori clear, which
+ terms to include.
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+For the 
+\emph on
+neural net, 
+\emph default
+we have 
+\begin_inset Formula 
+\begin{equation}
+Y_{jt}=\Psi_{j0}+\sum_{q=1}^{Q}\Psi_{jq}\phi\left(\Psi_{jq0}+\sum_{i=1}^{\#_{ZS}}\Psi_{jqi}s(X_{it},\Psi_{js})\right),\label{eq:PLM_NN}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\phi\left(\bullet\right)$
+\end_inset
+
+ is the activation function, 
+\begin_inset Formula $s(\bullet)$
+\end_inset
+
+ is the scaling function and 
+\begin_inset Formula $Q$
+\end_inset
+
+ is the number of neurons.
+ We found best behavior with 
+\begin_inset Formula $Q=5,000$
+\end_inset
+
+ neurons, and 
+\emph on
+ReLu
+\emph default
+ activation functions, 
+\begin_inset Formula $\phi(x)=\max\{0,x\}$
+\end_inset
+
+, on data scaled to have zero mean and unitary variance.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+It is straightforward to use multi-layered neural nets as well.
+ We have found no benefit from doing this.
+\end_layout
+
+\end_inset
+
+ We train the neural net (i.e.
+ find 
+\begin_inset Formula $\Psi$
+\end_inset
+
+) using stochastic gradient descend with a Nesterov momentum of 
+\begin_inset Formula $0.90$
+\end_inset
+
+ and mean squared errors as the loss function.
+ We aim for a perfect fit and over-fitting is therefor not an issue.
+ We terminate when no improvement has been achieved for 5 epochs.
+ We use the implementation in 
+\emph on
+tensorflow 
+\emph default
+in Python
+\emph on
+.
+\end_layout
+
+\begin_layout Standard
+For the 
+\emph on
+radial basis functions
+\emph default
+, we have
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+Y_{jt}=\Psi_{j00}+\sum_{i=1}^{\#_{ZS}}\Psi_{j0i}X_{it}+\sum_{\tau=1}^{\mathcal{T}}\Psi_{jk}\phi\left(\sum_{i=1}^{\#_{ZS}}\sqrt{\left(X_{it}-X_{i\tau}^{\text{sim}}\right)^{2}}\right),\label{eq:PLM_RBF}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $\phi\left(\bullet\right)$
+\end_inset
+
+ is the kernel, and 
+\begin_inset Formula $X_{i\tau}^{\text{sim}}$
+\end_inset
+
+is the 
+\begin_inset Formula $i$
+\end_inset
+
+'th input to the PLM from the 
+\begin_inset Formula $\tau$
+\end_inset
+
+'th period in the simulation for 
+\begin_inset Formula $\tau\in\{0,\dots,T\}$
+\end_inset
+
+.
+ We use a 
+\emph on
+thin plate function 
+\emph default
+kernel, 
+\begin_inset Formula $\phi(x)=x^{2}\log x$
+\end_inset
+
+.
+ The parameters are chosen by solving the equation system implied by exactly
+ fitting all the data points from the simulation.
+ We use the implementation in 
+\emph on
+scipy
+\emph default
+ in Python.
+\end_layout
+
+\begin_layout Standard
+The choice of function approximation method must be evaluated both in terms
+ of its ability to secure the stability of the solution method, its accuracy
+ at convergence, and the implied solution time.
+ Specifically, we measure the accuracy of the derived aggregate laws of
+ motion using the long-run dynamic forecast errors as suggested by 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "den_haan_assessing_2010"
+literal "false"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+A central issue for stability of the solution method is, that the complicated
+ geometry of inputs, 
+\begin_inset Formula $\boldsymbol{Z}_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $\boldsymbol{S}_{t-1}$
+\end_inset
+
+, change between iterations, even when keeping the shocks used for simulation
+ fixed.
+ Therefore extrapolation beyond the data set where the PLM was estimated
+ is unavoidable.
+ All the three chosen function approximation methods deliver good results
+ in this respect.
+ We have also experimented with global interpolation using Chebyshev polynomials
+ and local interpolation using nearest or natural neighbor interpolation
+ or Barycentric interpolation from a Delaunay-triangulation.
+ These function approximation methods, however, all suffer from boundary
+ issues, and we have often found stability problems in terms of lack of
+ convergence.
+\end_layout
+
+\begin_layout Standard
+Regarding 
+\emph on
+implementation complexity
+\emph default
+, the three function approximation methods are similar, as they all rely
+ on standard packages.
+\end_layout
+
+\begin_layout Section
+Benchmark model: HANC
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:HANC"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we present a baseline heterogeneous agent neo-classical
+ (HANC) model with aggregate risk.
+ Essentially, it is an extension of 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "krusell_income_1998"
+literal "false"
+
+\end_inset
+
+ to have i) technology utilization costs and ii) capital adjustment costs.
+ These extensions introduce an aggregate non-linearity and a forward looking
+ term, such that we need to search for prices at each period along the simulatio
+n.
+ 
+\end_layout
+
+\begin_layout Paragraph*
+Firms.
+\end_layout
+
+\begin_layout Standard
+A representative firm rents capital, 
+\begin_inset Formula $K_{t-1}$
+\end_inset
+
+, and hires labor, 
+\begin_inset Formula $L_{t}$
+\end_inset
+
+, to produce goods, with the production function
+\begin_inset Formula 
+\begin{equation}
+Y_{t}=u_{t}Z_{t}K_{t-1}^{\alpha}L_{t}^{1-\alpha},\label{eq:HANC_Y}
+\end{equation}
+
+\end_inset
+
+where 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+ is exogenous technology, and 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+ is technology utilization.
+ Technology follows an AR(1):
+\begin_inset Formula 
+\begin{equation}
+Z_{t+1}-Z_{ss}=\rho_{Z}(Z_{t}-Z_{ss})+\epsilon_{t+1}^{Z},\,\,\,\epsilon_{t}^{Z}\sim\mathcal{N}(0,\sigma_{Z}^{2}).\label{eq:HANC_Z}
+\end{equation}
+
+\end_inset
+
+Changing 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+ involves virtual adjustment costs.
+ Capital depreciates with the rate 
+\begin_inset Formula $\delta$
+\end_inset
+
+.
+ The representative firms objective is given as 
+\begin_inset Formula 
+\[
+\begin{array}{c}
+\max_{L_{t},K_{t-1},u_{t}}u_{t}Z_{t}K_{t-1}^{\alpha}L_{t}^{1-\alpha}-w_{t}L_{t}-r_{t}^{k}K_{t-1}-\chi_{1}\left(u_{t}-\tilde{u}\right)-\frac{\chi_{2}}{2}\left(u_{t}-\tilde{u}\right)^{2}\\
+\text{s.t.}\text{ }u_{t}\leq\bar{u}.
+\end{array}
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $r_{t}^{k}$
+\end_inset
+
+ is rental rate of capital and 
+\begin_inset Formula $w_{t}$
+\end_inset
+
+ is the wage rate, 
+\begin_inset Formula $\chi_{1}$
+\end_inset
+
+ and 
+\begin_inset Formula $\chi_{2}$
+\end_inset
+
+ are parameters determining the size of the linear and convex adjustment
+ costs, and 
+\begin_inset Formula $\tilde{u}$
+\end_inset
+
+ is zero-cost level of technology utilization.
+ Finally, 
+\begin_inset Formula $\bar{u}$
+\end_inset
+
+ is an upper bound on 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+ introducing an aggregate non-linearity.
+ The problem yields standard pricing equations plus an equation pinning
+ down technology capacity utilization
+\series bold
+
+\begin_inset Formula 
+\begin{align}
+r_{t}^{k} & =\alpha u_{t}Z_{t}(K_{t-1}/L_{t})^{\text{\alpha-1}}\equiv r^{k}(u_{t},Z_{t},K_{t-1},L_{t})\label{eq:HANC_rk}\\
+w_{t} & =(1-\alpha)u_{t}Z_{t}(K_{t-1}/L_{t})^{\alpha}\equiv w(u_{t},Z_{t},K_{t-1},L_{t})\label{eq:HANC_w}\\
+u_{t} & =\max\left[\frac{Z_{t}K_{t-1}^{\alpha}L_{t}^{1-\alpha}-\chi_{1}+\chi_{2}\tilde{u}}{\chi_{2}},\bar{u}\right]\equiv u(Z_{t},K_{t-1},L_{t}).\label{eq:HANC_u}
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The implied
+\series bold
+ 
+\series default
+(real) interest rate is 
+\begin_inset Formula 
+\[
+r_{t}=r_{t}^{k}-q_{t}\delta=r^{k}(u_{t},Z_{t},K_{t-1},L_{t})-\delta\equiv r(u_{t},Z_{t},K_{t-1},L_{t}).
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph
+Capital producers.
+\end_layout
+
+\begin_layout Standard
+Capital producers choose investment, 
+\begin_inset Formula $I_{t},$
+\end_inset
+
+and take the price of capital, 
+\begin_inset Formula $q_{t}$
+\end_inset
+
+, as given.
+ Investments are subject to quadratic adjustment costs, and capital producers
+ objective is given as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\[
+\mathbb{E}_{0}\sum_{t=0}^{\infty}\beta^{t}I_{t}\left\{ q_{t}\left[1-\frac{\phi}{2}\left(\log\frac{I_{t}}{I_{t-1}}\right)^{2}\right]-1\right\} .
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Optimality implies (dropping higher-order terms)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+q_{t}\left[1-\phi\log\frac{I_{t}}{I_{t-1}}\right]=1-\beta\mathbb{E}_{t}\left[q_{t+1}\phi\log\left(\frac{I_{t+1}}{I_{t}}\right)\right].\label{eq:HANC_FOC_I}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Assuming that capital adjustment costs are virtual, the law of motion for
+ aggregate capital is trivially given by 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{c}
+K_{t}=I_{t}+\left(1-\delta\right)K_{t-1}-\frac{\phi}{2}\left(\log\frac{I_{t}}{I_{t-1}}\right)^{2}\end{array}.\label{eq:HANC_K_acu}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Implies zero adjustment costs in steady-state.
+\end_layout
+
+\begin_layout Paragraph*
+Households.
+\end_layout
+
+\begin_layout Standard
+Households are heterogeneous ex post with respect to their productivity,
+ 
+\begin_inset Formula $z_{t}$
+\end_inset
+
+, and assets, 
+\begin_inset Formula $a_{t-1}$
+\end_inset
+
+.
+ The distribution of households is denoted 
+\begin_inset Formula $D_{t}$
+\end_inset
+
+.
+ Each period household exogenously supply 
+\begin_inset Formula $z_{t}$
+\end_inset
+
+ units of labor, and choose consumption 
+\begin_inset Formula $c_{t}$
+\end_inset
+
+ subject to a no-borrowing constraint.
+ The household problem is 
+\begin_inset Formula 
+\begin{align}
+v(Z_{t},K_{t-1},I_{t-1},z_{t},a_{t-1}) & =\max_{a_{t},c_{t}}\frac{c_{t}^{1-\sigma}}{1-\sigma}+\beta\mathbb{E}_{t}\left[v(Z_{t+1},K_{t},I_{t},z_{t+1},a_{t})\right]\label{eq:HANC_bellman}\\
+ & \text{s.t.}\nonumber \\
+L_{t} & =1\nonumber \\
+K_{t-1} & =\int a_{t-1}dD_{t}\nonumber \\
+r_{t},w_{t},K_{t},I_{t} & =\text{PLM}(Z_{t},K_{t-1},I_{t-1})\nonumber \\
+a_{t}+c_{t} & =(1+r_{t})a_{t-1}+w_{t}z_{t}\nonumber \\
+\log z_{t+1} & =\rho_{z}\log z_{t}+\psi_{t+1}\,\,\,,\psi_{t+1}\sim\mathcal{N}(\mu_{\psi},\sigma_{\psi}),\,\mathbb{E}[z_{t+1}]=1\nonumber \\
+Z_{t+1} & =\rho_{Z}(Z_{t}-Z_{ss})+\epsilon_{t+1}^{Z}\nonumber \\
+D_{t+1} & =\Lambda(Z_{t},D_{t})\nonumber \\
+a_{t} & \geq0.\nonumber 
+\end{align}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Paragraph*
+Calibration.
+\end_layout
+
+\begin_layout Standard
+The calibration is arbitrary, but implies aggregate and idiosyncratic dynamics
+ within reasonable bounds.
+ 
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Preferences:
+\series default
+ 
+\begin_inset Formula $\sigma=2$
+\end_inset
+
+, 
+\begin_inset Formula $\beta=0.995$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Income:
+\series default
+ 
+\begin_inset Formula $\rho_{z}=0.96$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma_{\psi}=0.15$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Production and investment:
+\series default
+ 
+\begin_inset Formula $\alpha=0.33$
+\end_inset
+
+, 
+\begin_inset Formula $\delta=0.05$
+\end_inset
+
+, 
+\begin_inset Formula $\varphi=0.05$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Technology utilization: 
+\series default
+
+\begin_inset Formula $\overline{u}=1.0$
+\end_inset
+
+, 
+\begin_inset Formula $\chi_{1}=1$
+\end_inset
+
+, 
+\begin_inset Formula $\chi_{2}=1$
+\end_inset
+
+, 
+\begin_inset Formula $\tilde{u}=0.99$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+
+\series bold
+Aggregate technology: 
+\series default
+
+\begin_inset Formula $\rho_{Z}=0.80$
+\end_inset
+
+, 
+\begin_inset Formula $\sigma_{Z}=0.01$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Global solution 
+\end_layout
+
+\begin_layout Standard
+The general solution method can be used cf.
+ Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Solution-Method"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ as follows
+\end_layout
+
+\begin_layout Enumerate
+The shocks are 
+\begin_inset Formula $\boldsymbol{Z}_{t}=\{Z_{t}\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The aggregate states are 
+\begin_inset Formula $\boldsymbol{S}_{t}=\{K_{t},I_{t}\}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+The 
+\begin_inset Quotes ald
+\end_inset
+
+prices
+\begin_inset Quotes ard
+\end_inset
+
+ are 
+\begin_inset Formula $\boldsymbol{P}_{t}=\{r_{t},w_{t}\}$
+\end_inset
+
+,
+\end_layout
+
+\begin_layout Enumerate
+The PLM is 
+\begin_inset Formula 
+\begin{align*}
+K_{t} & =\text{PLM}_{K}(Z_{t},I_{t-1},K_{t-1};\Psi)\\
+q_{t} & =\text{PLM}_{q}(Z_{t},I_{t-1},K_{t-1};\Psi)\\
+u_{t} & =u(Z_{t},K_{t-1},1)\\
+w_{t} & =w(u_{t},Z_{t},K_{t-1},1)\\
+r_{t}^{k} & =r(u_{t},Z_{t},K_{t-1},1)\\
+r_{t} & =r_{t}^{k}-q_{t}\delta_{t}.
+\end{align*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The cash-on-hand function is
+\begin_inset Formula 
+\[
+m(z_{t},a_{t-1},\boldsymbol{P}_{t})=(1+r_{t})a_{t-1}+w_{t}z_{t}.
+\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Enumerate
+The market clearing condition is
+\begin_inset Formula 
+\[
+\int a_{t}^{\star}(\boldsymbol{z}_{t},m(\boldsymbol{z}_{t},a_{t-1},w_{t},r_{t}))dD_{t}=K_{t},
+\]
+
+\end_inset
+
+where we guess on 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ and get 
+\begin_inset Formula $r_{t}$
+\end_inset
+
+ from
+\begin_inset Formula 
+\begin{align*}
+q_{t} & =\frac{1-\beta\mathbb{E}_{t}\left[q_{t+1}\phi\log\left(\frac{I_{t+1}}{I_{t}}\right)\right]}{1-\phi\log\left(\frac{I_{t}}{I_{t-1}}\right)}\\
+ & K_{t+1}=\text{PLM}_{K}(Z_{t+1},I_{t},K_{t};\Psi)\\
+ & I_{t+1}=K_{t+1}-\left(1-\delta\right)K_{t}\\
+ & q_{t+1}=\text{PLM}_{q}(Z_{t+1},I_{t},K_{t};\Psi)\\
+u_{t} & =u(Z_{t},K_{t-1},1)\\
+w_{t} & =w(u_{t},Z_{t},K_{t-1},1)\\
+r_{t}^{k} & =r(u_{t},Z_{t},K_{t-1},1)\\
+r_{t} & =r_{t}^{k}-q_{t}\delta_{t},
+\end{align*}
+
+\end_inset
+
+and where expectations are evaluated using Gauss-Hermite quadrature on the
+ actual law of motion, 
+\begin_inset Formula $Z_{t+1}=\rho_{Z}(Z_{t}-Z_{ss})+\epsilon_{t+1}^{Z}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Paragraph*
+Numerical implementation.
+\end_layout
+
+\begin_layout Standard
+For the 
+\emph on
+household problem
+\emph default
+, we use 
+\begin_inset Formula $\#_{a}=80$
+\end_inset
+
+ grid points for 
+\begin_inset Formula $a_{t}\in[0,100]$
+\end_inset
+
+ and 
+\begin_inset Formula $\#_{z}=3$
+\end_inset
+
+ grid points for 
+\begin_inset Formula $z_{t}$
+\end_inset
+
+ discretized using the Rouwenhorst-method.
+ For the deterministic steady state we solve and simulate the household
+ problem with a tolerance of 
+\begin_inset Formula $10^{-12}$
+\end_inset
+
+.
+ When solving the household problem globally, we lower the tolerance to
+ 
+\begin_inset Formula $10^{-4}$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+For the 
+\emph on
+aggregate states
+\emph default
+ we use, 
+\begin_inset Formula $10$
+\end_inset
+
+ grid points for 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+, 
+\begin_inset Formula $20$
+\end_inset
+
+ grid points for 
+\begin_inset Formula $K_{t-1}$
+\end_inset
+
+, 
+\begin_inset Formula $15$
+\end_inset
+
+ grid points for 
+\begin_inset Formula $I_{t-1}$
+\end_inset
+
+ and 
+\begin_inset Formula $3$
+\end_inset
+
+ Gauss-Hermite nodes for 
+\begin_inset Formula $Z_{t+1}$
+\end_inset
+
+.
+ The grid spans are chosen relative to the mean values of the PLM states
+ from initial linear simulation.
+ 
+\end_layout
+
+\begin_layout Standard
+We simulate the model for 
+\begin_inset Formula $5,000$
+\end_inset
+
+ periods and use a market clearing tolerance of 
+\begin_inset Formula $10^{-6}$
+\end_inset
+
+.
+ For the 
+\emph on
+PLMs, 
+\emph default
+we use a relaxation weight of 
+\begin_inset Formula $\omega=0.65$
+\end_inset
+
+ and a tolerance of 
+\begin_inset Formula $10^{-4}$
+\end_inset
+
+ whenever possible.
+\end_layout
+
+\begin_layout Standard
+Timings were computed on a Windows 10 desktop computer with a i7-4770 3.4
+ GHz CPU with 4 cores and 32 GB of RAM.
+\end_layout
+
+\begin_layout Subsection
+Perfect foresight IRFs
+\end_layout
+
+\begin_layout Standard
+To get intuition on the aggregate non-linearites present in the model, we
+ first consider a 2 percent shock to technology and compare the linear and
+ non-linear perfect foresight impulse responses computed with the sequence
+ space method in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "auclert_using_2021"
+literal "false"
+
+\end_inset
+
+.
+ In Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HANC:PF_LIN"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we see that the linearized solution does 
+\emph on
+not
+\emph default
+ take the non-linearity of technology utilization into account, and implies
+ a utilization rate way above the allowed upper limit of 
+\begin_inset Formula $\overline{u}=1$
+\end_inset
+
+.
+ The positive effect on capital accumulation is consequently overstated
+ relative to the nonlinear impulse response.
+ This shows that a simulation of the model with aggregate risk using linearizati
+on will be very inaccurate.
+ Therefore a global solution is needed.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Perfect foresight and linearized impulse responses
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC:PF_LIN"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Technology, 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/IRF_Z_pf.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/IRF_K_pf.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Utilization rate, 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Investment price, 
+\begin_inset Formula $q_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/IRF_u_pf.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/IRF_q_pf.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Results
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Results"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this Section, we present results from using the global solution presented
+ in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:HANC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and how the choice of function approximation method in the PLMs affects
+ the accuracy and solution time.
+ This section does not contain results with a neural net for function approximat
+ion due to convergence issues.
+ In Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Results-with-no"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we consider the limit of no capital adjustment costs, 
+\begin_inset Formula $\varphi\rightarrow0$
+\end_inset
+
+, where all the function approximation methods yields converged global solutions.
+\end_layout
+
+\begin_layout Subsection
+Simulations
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Simulation"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+As explained in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Solution-Method"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we begin our global solution methods from a linearized simulation given
+ a fixed draw of aggregate shocks.
+ At convergence, our simulation method implies a new simulation with these
+ aggregate shocks.
+ Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HANC:RBF_vs_LINEAR"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ shows the last 1,000 periods from these two simulations, where we use RBF
+ for function approximation in the PLMs.
+ We see that the upper limit of the utilization rate is violated in the
+ linearized simulation, but respected in the global simulation.
+ This naturally affects the dynamics of capital, which is markedly different,
+ but still similar enough to make the linearized model reasonable to start
+ from.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Simulation (in-sample): RBF vs.
+ linear 
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC:RBF_vs_LINEAR"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Utilization rate, 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/sim_compare_linear_RBF_K.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/sim_compare_linear_RBF_u.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Next, we consider out-of-sample simulations with new draws of shocks not
+ used in the solution.
+ In Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HANC:Simulation_PLM_methods"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we show global simulations with the OLS and RBF function approximation
+ methods for the PLMs.
+ The OLS based simulation is consistently beneath the RBF based one, though
+ the differences are not large.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Simulation (out-of-sample): PLM methods
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC:Simulation_PLM_methods"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Utilization rate, 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/sim_compare_K.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/sim_compare_u.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Accuracy
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Accuracy"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To choose between the different function approximation methods, we now consider
+ their accuracy.
+ In Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HANC:ONE_STEP_ERRORS"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we first show the one-step prediction errors for capital and the investment
+ price in percent of the true realizations in an out-of-sample simulation.
+ Using RBF delivers much more precise predictions than using OLS.
+ With RBF, the errors are nicely centered around zero.
+ With OLS, the errors are fat-tailed and left-skewed.
+ The skewness is likely due to the upper bound on the technology utilization
+ rate.
+\series bold
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+One-step ahead PLM errors
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC:ONE_STEP_ERRORS"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="3" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Investment price, 
+\begin_inset Formula $q_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/one_step_K_errors_pdf.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/one_step_q_errors_pdf.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/one_step_K_errors_cdf.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/one_step_q_errors_cdf.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+A stronger accuracy measure is given by the dynamic Den Haan errors, cf.
+ 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "den_haan_assessing_2010"
+literal "false"
+
+\end_inset
+
+.
+ We use a standard out-of-sample simulation and a simulation based on the
+ PLMs alone to calculate these.
+ Specifically, the path of capital and the investment price is generated
+ by the PLMs alone as
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{c}
+K_{t}^{\text{PLM}}=\text{PLM}_{K}(Z_{t},K_{t-1}^{PLM},I_{t-1}^{PLM})\\
+q_{t}^{\text{PLM}}=\text{PLM}_{K}(Z_{t},K_{t-1}^{PLM},I_{t-1}^{PLM})\\
+I_{t}^{\text{PLM}}=K_{t}^{\text{PLM}}-(1-\delta)K_{t-1}^{PLM}.
+\end{array}\label{eq:sim_PLM}
+\end{equation}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The dynamic errors are then calculated in percentage terms as
+\begin_inset Formula 
+\begin{equation}
+\begin{array}{c}
+100\times\left|\log K_{t}^{\text{PLM}}-\log K_{t}\right|\\
+100\times\left|\log q_{t}^{\text{PLM}}-\log q_{t}\right|.
+\end{array}\label{eq:dynamic_error}
+\end{equation}
+
+\end_inset
+
+In Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HANC:Dynamic_errors_plot"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we plot the dynamic PLM forecasts against the actual model simulation.
+ We see that with RBF the PLM simulation lies almost exactly on top of the
+ model simulation, while with OLS it is consistently below.
+ 
+\end_layout
+
+\begin_layout Standard
+This observation is also confirmed in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:HANC:-Prediction-Errors"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ For both the maximum and the average, the dynamic errors are more than
+ an order of magnitude larger with OLS than RBF.
+ This is moreover achieved with a minimal increase in the solution time
+ of about 10 percent due to an increased time to estimate the PLMs.
+ The RBF errors are very small and economically acceptable.
+ Using RBF takes slightly longer due to a more complicated estimation of
+ the PLM.
+ With both methods, the solution time is less than 15 minutes.
+ RBF is therefore clearly preferred.
+\begin_inset Foot
+status collapsed
+
+\begin_layout Plain Layout
+The low number of required simulations shows the benefits of starting from
+ the linearized solution.
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Dynamic PLM errors
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC:Dynamic_errors_plot"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+OLS
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/den_haan_errors_time_path_OLS.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+RBF
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/den_haan_errors_time_path_RBF.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+HANC: Prediction Errors
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:HANC:-Prediction-Errors"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+footnotesize
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tabularx}{0.75
+\backslash
+linewidth}{lSSS}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+toprule 
+\backslash
+toprule 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& OLS
+\end_layout
+
+\begin_layout Plain Layout
+
+& RBF
+\end_layout
+
+\begin_layout Plain Layout
+
+& NN 
+\backslash
+vspace{2mm} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cmidrule(lr){2-4} 
+\backslash
+vspace{-2mm} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& 
+\backslash
+multicolumn{3}{c}{
+\backslash
+textit{dynamic log prediction errors $
+\backslash
+times$  100}} 
+\backslash
+vspace{2mm} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{HANC/tabs/errors.tex} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& 
+\backslash
+multicolumn{3}{c}{
+\backslash
+textit{timings (secs.)}} 
+\backslash
+vspace{2mm} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{HANC/tabs/timings.tex}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+ 
+\backslash
+bottomrule 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tabularx}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+PLMs
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:PLMs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+To understand the differences in accuracy, we now investigate how the PLMs
+ actually look like.
+\end_layout
+
+\begin_layout Standard
+In Figures 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HANC:PLM_K_2d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HANC:PLM_q_2d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+, we plot how the PLMs for capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+, and the investment price, 
+\begin_inset Formula $q_{t}$
+\end_inset
+
+, vary along each input dimension keeping the values of the other inputs
+ fixed at their (deterministic) steady-state values.
+ 
+\end_layout
+
+\begin_layout Standard
+We see that RBF interpolation captures non-linearities in the model, especially
+ along the 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+ and the 
+\begin_inset Formula $I_{t-1}$
+\end_inset
+
+ dimensions, which cannot be captured with linear OLS.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+PLM for capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+ – 2D slices
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC:PLM_K_2d"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vary 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+ (
+\begin_inset Formula $K_{t-1}=K_{ss}$
+\end_inset
+
+, 
+\begin_inset Formula $I_{t-1}=I_{ss}$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vary 
+\begin_inset Formula $K_{t-1}$
+\end_inset
+
+ (
+\begin_inset Formula $Z_{t}=Z_{ss}$
+\end_inset
+
+, 
+\begin_inset Formula $I_{t-1}=I_{ss}$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/PLM_K_vary_Z.pdf
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/PLM_K_vary_K.pdf
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vary 
+\begin_inset Formula $I_{t-1}$
+\end_inset
+
+ (
+\begin_inset Formula $Z_{t}=Z_{ss}$
+\end_inset
+
+, 
+\begin_inset Formula $K_{t-1}=K_{ss}$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/PLM_K_vary_i.pdf
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+2PLM for investment price, 
+\begin_inset Formula $q_{t}$
+\end_inset
+
+ – 2D slices
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC:PLM_q_2d"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vary 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+ (
+\begin_inset Formula $K_{t-1}=K_{ss}$
+\end_inset
+
+, 
+\begin_inset Formula $I_{t-1}=I_{ss}$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vary 
+\begin_inset Formula $K_{t-1}$
+\end_inset
+
+ (
+\begin_inset Formula $Z_{t}=Z_{ss}$
+\end_inset
+
+, 
+\begin_inset Formula $I_{t-1}=I_{ss}$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename HANC/figs/PLM_q_vary_Z.pdf
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/PLM_q_vary_K.pdf
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vary 
+\begin_inset Formula $I_{t-1}$
+\end_inset
+
+ (
+\begin_inset Formula $Z_{t}=Z_{ss}$
+\end_inset
+
+, 
+\begin_inset Formula $K_{t-1}=K_{ss}$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell multicolumn="1" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\series bold
+\begin_inset Graphics
+	filename HANC/figs/PLM_q_vary_i.pdf
+	width 40text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell multicolumn="2" alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Global solution IRFs
+\begin_inset CommandInset label
+LatexCommand label
+name "subsec:Global-solution-IRFs"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this sub-section, we present impulse responses functions (IRFs) from
+ the global solutions and compare them with IRFs from the linear and non-linear
+ perfect foresight solutions.
+ We again consider a 2 percent TFP shock as in Section 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:HANC"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+To obtain IRFs from the global models, we add the shock to the baseline
+ technology path, 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+, and simulate forward.
+ We then subtract the baseline simulation (the model simulation without
+ the added shock) and divide it by the initial value.
+ We do this for about 500 evenly spaced different starting points and take
+ the mean to obtain global impulse responses.
+ Results are presented in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HANC:IRF_global_vs_PF"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Impulse-responses: Global vs.
+ perfect foresight
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC:IRF_global_vs_PF"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Utilization rate, 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/IRF_K_global.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/IRF_u_global.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The main takeaway is that the impulses from global non-linear models differ
+ quite a bit from perfect foresight-based solutions.
+ Remember, that the linearized perfect foresight solution is a linearized
+ global solution, and is thus directly comparable with the non-linear global
+ solution.
+ We also note that the OLS and RBF based global solutions are very close.
+ Thus, even if the RBF based PLM is more precise and yields different simulation
+ paths, for shocks of this size, IRFs are pretty similar.
+\end_layout
+
+\begin_layout Standard
+Note that the reason the technology utilization rate, 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+, is never capped off in the global solution IRFs is that the IRFs are means
+ over many IRFs, some of which hit the upper bound and some do not, whereas
+ the perfect foresight IRFs are relative to the deterministic steady-state.
+ 
+\end_layout
+
+\begin_layout Standard
+Finally, we also show global IRFs with 90 (light grey) and 70 percentile
+ (dark grey) bands in Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HANC:IRF_state_dependence"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ This shows state dependence; initial values matter for the resulting IRFs.
+ We note minor differences between the OLS and RBF PLM bands; the OLS bands
+ are wider.
+ Thus the OLS based model seems more volatile than the RBF based one.
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Impulse-responses: State-dependence
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC:IRF_state_dependence"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="4" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RBF: Capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+RBF: Utilization rate, 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/IRF_K_RBF_global.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/IRF_u_RBF_global.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OLS: Capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+OLS: Utilization rate, 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/IRF_K_OLS_global.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC/figs/IRF_u_OLS_global.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Results with no capital adjustment costs
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Results-with-no"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In this section, we consider a simpler variant of the model without capital
+ adjustment costs, 
+\begin_inset Formula $\varphi\rightarrow0$
+\end_inset
+
+.
+ Then there is only one aggregate state, 
+\begin_inset Formula $\boldsymbol{S}_{t}=K_{t}$
+\end_inset
+
+, and we do not need to search over 
+\begin_inset Formula $I_{t}$
+\end_inset
+
+ for market clearing, as the pricing equations give use price, 
+\begin_inset Formula $r_{t}$
+\end_inset
+
+ and 
+\begin_inset Formula $w_{t}$
+\end_inset
+
+, directly from the pre-determined stock of capital.
+\end_layout
+
+\begin_layout Standard
+To give an overview of the viability of the different function approximation
+ methods for the PLMs, we again calculate dynamic Den Haan errors and the
+ solution time in Table 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "tab:HANC_noadj:Prediction-Errors"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ When using OLS and RBF the results are similar to those obtained in the
+ full model.
+ The NN -based solution now converges.
+ The implied accuracy is satisfactory and, on average, almost as good as
+ with RBF.
+ The maximum errors are, however, much larger.
+ This is likely because the neural net overestimates curvature along the
+ endpoints of the capital grid, a problem not present in the radial basis
+ function solution, see Appendix Figure 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "fig:HANC_noadj:PLM_K_2d"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ Additionally, the solution time is an order of magnitude longer with NN.
+ This primarily results from a very slow training step, which makes it time-cons
+uming to estimate the PLMs.
+ With NN, the number of required iterations is also higher.
+\end_layout
+
+\begin_layout Standard
+Additional figures are include in Appendix 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "sec:Additional-Tables-and"
+plural "false"
+caps "false"
+noprefix "false"
+
+\end_inset
+
+.
+ 
+\begin_inset Float table
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+HANC: Prediction Errors (no capital adjustment costs)
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:HANC_noadj:Prediction-Errors"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+footnotesize
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tabularx}{0.65
+\backslash
+linewidth}{lSSS}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+toprule 
+\backslash
+toprule 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& OLS
+\end_layout
+
+\begin_layout Plain Layout
+
+& RBF
+\end_layout
+
+\begin_layout Plain Layout
+
+& NN 
+\backslash
+vspace{2mm} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+cmidrule(lr){2-4} 
+\backslash
+vspace{-2mm} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& 
+\backslash
+multicolumn{3}{c}{
+\backslash
+textit{dynamic log prediction errors $
+\backslash
+times$  100}} 
+\backslash
+vspace{2mm} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{HANC_nocapadjcost/tabs/errors.tex} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+& 
+\backslash
+multicolumn{3}{c}{
+\backslash
+textit{timings (secs.)}} 
+\backslash
+vspace{2mm} 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+input{HANC_nocapadjcost/tabs/timings.tex}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+
+\backslash
+ 
+\backslash
+bottomrule 
+\backslash
+
+\backslash
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tabularx}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Conclusion
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusion"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+We have presented an extension of the basic Krusell-Smith algorithm to account
+ for non-linear dynamics.
+ Our preferred choice is to model the perceived laws-of-motion (PLMs) with
+ radial basis function interpolation.
+ This delivers stable, accurate, and precise results and is easy to implement.
+ To the best of our knowledge, the proposed global solution method is state-of-t
+he-art for heterogeneous agent models, which can be approximated by a low
+ number of aggregate states, but have non-linear dynamics.
+\end_layout
+
+\begin_layout Standard
+Multiple further lines of inquiry are possible and valuable.
+ The internal robustness of the proposed solution method can be investigated
+ by varying grid sizes, tolerances and simulation lengths.
+ Additional activation functions for the neural net and additional kernels
+ for the radial basis function interpolation can also be investigated.
+ A method related to radial basis function interpolation, gaussian process
+ regression (implemented in e.g
+\emph on
+.
+ scikit-learn
+\emph default
+) could also be considered.
+ To investigate the convergence issues further, additional models should
+ be considered.
+ Including models with New Keynesian features.
+\end_layout
+
+\begin_layout Standard
+Code speed-up is achievable by using parallelization and graphics cards
+ (especially for the neural net).
+ Or by solving the household problem using a Howard improvement step as
+ in 
+\begin_inset CommandInset citation
+LatexCommand citet
+key "rendahl_continuous_2022"
+literal "false"
+
+\end_inset
+
+ (or a modified policy iteration version hereof).
+\end_layout
+
+\begin_layout Standard
+Finally, the accuracy and speed of radial basis function interpolation make
+ it a good candidate for use in a parameterized expectation based approach.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Newpage newpage
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+btprint "btPrintCited"
+bibfiles "GlobalHA"
+options "apalike"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\start_of_appendix
+\begin_inset Newpage newpage
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+thefigure{
+\backslash
+thesection.
+\backslash
+arabic{figure}}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+renewcommand
+\backslash
+thetable{
+\backslash
+thesection.
+\backslash
+arabic{table}}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{figure}{0}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setcounter{table}{0}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Additional Tables and Figures
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Additional-Tables-and"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+No capital adjustment costs
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Simulation (out-of-sample): PLM methods
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC_noadj:Simulation_PLM_methods"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Utilization rate, 
+\begin_inset Formula $u_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC_nocapadjcost/figs/sim_compare_K.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC_nocapadjcost/figs/sim_compare_u.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+PLM for capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+ – 2D slices
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC_noadj:PLM_K_2d"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vary 
+\begin_inset Formula $Z_{t}$
+\end_inset
+
+ (
+\begin_inset Formula $K_{t-1}=K_{ss}$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Vary
+\begin_inset Formula $K_{t}$
+\end_inset
+
+ (
+\begin_inset Formula $Z_{t}=Z_{ss}$
+\end_inset
+
+)
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC_nocapadjcost/figs/PLM_K_vary_Z.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC_nocapadjcost/figs/PLM_K_vary_K.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+One-step ahead PLM errors
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC_noadj:ONE_STEP_ERRORS"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="1" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC_nocapadjcost/figs/one_step_errors_pdf.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC_nocapadjcost/figs/one_step_errors_cdf.pdf
+	width 45text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Impulse-responses: Global vs.
+ perfect foresight
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:HANC_noadj:IRF_global_vs_PF"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+centering
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="2">
+<features tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Capital, 
+\begin_inset Formula $K_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Utilization rate, 
+\begin_inset Formula $r_{t}$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC_nocapadjcost/figs/IRF_K_global.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename HANC_nocapadjcost/figs/IRF_u_global.pdf
+	width 50text%
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document
