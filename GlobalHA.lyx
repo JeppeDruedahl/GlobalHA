@@ -276,7 +276,7 @@ Introduction
 
 \begin_layout Standard
 Recently, a burgeoning literature incorporating explicit heterogeneity into
- business cycle model has come to the forefront of modern macroeconomics.
+ business cycle models has come to the forefront of modern macroeconomics.
  This literature shows that introducing such heterogeneity may radically
  alter transmission mechanisms and dynamics relative to comparable representativ
 e agent economies.
@@ -1216,7 +1216,7 @@ The potential computational bottlenecks in the algorithm are in steps 6-8.
  For simplicity, we here consider tensor product grids and multi-linear
  interpolation.
 \begin_inset Foot
-status collapsed
+status open
 
 \begin_layout Plain Layout
 The presence of aggregate non-linearities makes global interpolation methods
@@ -1560,7 +1560,7 @@ where
  Technology follows an AR(1):
 \begin_inset Formula 
 \begin{equation}
-Z_{t+1}-Z_{ss}=\rho_{Z}(Z_{t}-Z_{ss})+\epsilon_{t+1}^{Z},\,\,\,\epsilon_{t}^{Z}\sim\mathcal{N}(0,\sigma_{Z}^{2}).\label{eq:HANC_Z}
+Z_{t+1}-Z_{ss}=\rho_{Z}(Z_{t}-Z_{ss})+\epsilon_{t+1}^{Z},\,\,\,\epsilon_{t+1}^{Z}\sim\mathcal{N}(0,\sigma_{Z}^{2}).\label{eq:HANC_Z}
 \end{equation}
 
 \end_inset
@@ -1637,22 +1637,6 @@ u_{t} & =\max\left[\frac{Z_{t}K_{t-1}^{\alpha}L_{t}^{1-\alpha}-\chi_{1}+\chi_{2}
 
 \end_layout
 
-\begin_layout Standard
-The implied
-\series bold
- 
-\series default
-(real) interest rate is 
-\begin_inset Formula 
-\[
-r_{t}=r_{t}^{k}-q_{t}\delta=r^{k}(u_{t},Z_{t},K_{t-1},L_{t})-\delta\equiv r(u_{t},Z_{t},K_{t-1},L_{t}).
-\]
-
-\end_inset
-
-
-\end_layout
-
 \begin_layout Paragraph
 Capital producers.
 \end_layout
@@ -1706,7 +1690,7 @@ Assuming that capital adjustment costs are virtual, the law of motion for
 \begin_inset Formula 
 \begin{equation}
 \begin{array}{c}
-K_{t}=I_{t}+\left(1-\delta\right)K_{t-1}-\frac{\phi}{2}\left(\log\frac{I_{t}}{I_{t-1}}\right)^{2}\end{array}.\label{eq:HANC_K_acu}
+K_{t}=I_{t}+\left(1-\delta\right)K_{t-1}\end{array}.\label{eq:HANC_K_acu}
 \end{equation}
 
 \end_inset
@@ -1716,6 +1700,22 @@ K_{t}=I_{t}+\left(1-\delta\right)K_{t-1}-\frac{\phi}{2}\left(\log\frac{I_{t}}{I_
 
 \begin_layout Standard
 Implies zero adjustment costs in steady-state.
+\end_layout
+
+\begin_layout Standard
+The implied
+\series bold
+ 
+\series default
+(real) interest rate is 
+\begin_inset Formula 
+\[
+r_{t}=r_{t}^{k}-q_{t}\delta=r^{k}(u_{t},Z_{t},K_{t-1},L_{t})-q_{t}\delta\equiv r(u_{t},Z_{t},K_{t-1},L_{t},q_{t}).
+\]
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Paragraph*
@@ -1757,7 +1757,7 @@ K_{t-1} & =\int a_{t-1}dD_{t}\nonumber \\
 r_{t},w_{t},K_{t},I_{t} & =\text{PLM}(Z_{t},K_{t-1},I_{t-1})\nonumber \\
 a_{t}+c_{t} & =(1+r_{t})a_{t-1}+w_{t}z_{t}\nonumber \\
 \log z_{t+1} & =\rho_{z}\log z_{t}+\psi_{t+1}\,\,\,,\psi_{t+1}\sim\mathcal{N}(\mu_{\psi},\sigma_{\psi}),\,\mathbb{E}[z_{t+1}]=1\nonumber \\
-Z_{t+1} & =\rho_{Z}(Z_{t}-Z_{ss})+\epsilon_{t+1}^{Z}\nonumber \\
+Z_{t+1} & =Z_{ss}+\rho_{Z}(Z_{t}-Z_{ss})+\epsilon_{t+1}^{Z},\,\,\,\epsilon_{t+1}^{Z}\sim\mathcal{N}(0,\sigma_{Z}^{2})\nonumber \\
 D_{t+1} & =\Lambda(Z_{t},D_{t})\nonumber \\
 a_{t} & \geq0.\nonumber 
 \end{align}
@@ -2148,7 +2148,7 @@ on will be very inaccurate.
 placement H
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset Caption Standard
