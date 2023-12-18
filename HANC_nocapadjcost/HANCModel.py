@@ -40,27 +40,16 @@ class HANCModelClass(EconModelClass,GEModelClass):
         self.shocks = ['Z'] # exogenous inputs
         self.unknowns = ['K'] # endogenous inputs
         self.targets = ['clearing_A'] # targets
+        self.blocks = [
+            'blocks.block_pre',
+            'hh',
+            'blocks.block_post'] # blocks
         
-        self.varlist = [ # all variables
-            'A_hh',
-            'A',
-            'C_hh',
-            'C',
-            'clearing_A',
-            'clearing_C',
-            'K',
-            'L',
-            'r',
-            'rk',
-            'u',
-            'w',
-            'Y',
-            'Z',
-        ]
+
 
         self.solve_hh_backwards = household_problem.solve_hh_backwards
-        self.block_pre = blocks.block_pre
-        self.block_post = blocks.block_post
+      #  self.block_pre = blocks.block_pre
+        #self.block_post = blocks.block_post 
         
     def setup(self):
         """ set baseline parameters """

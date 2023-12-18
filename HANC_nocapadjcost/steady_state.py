@@ -14,24 +14,24 @@ def prepare_hh_ss(model):
     ############
     # 1. grids #
     ############
-
+    
     # a. beta
     par.beta_grid[:] = np.linspace(par.beta_mean-par.beta_delta,par.beta_mean+par.beta_delta,par.Nbeta)
 
     # b. a
     par.a_grid[:] = equilogspace(0.0,ss.w*par.a_max,par.Na)
-
-    # c. e
-    par.z_grid[:],ss.z_trans[0,:,:],e_ergodic,_,_ = log_rouwenhorst(par.rho_z,par.sigma_psi,par.Nz)
+    
+    # c. z
+    par.z_grid[:],z_trans,z_ergodic,_,_ = log_rouwenhorst(par.rho_z,par.sigma_psi,par.Nz)
 
     #############################################
     # 2. transition matrix initial distribution #
     #############################################
     
     for i_fix in range(par.Nfix):
-        ss.Dz[i_fix,:] = e_ergodic/par.Nfix
-        ss.Dbeg[i_fix,:,0] = ss.Dz[i_fix,:]
-        ss.Dbeg[i_fix,:,1:] = 0.0    
+        ss.z_trans[i_fix,:,:] = z_trans
+        ss.Dbeg[i_fix,:,0] = z_ergodic/par.Nfix # ergodic at a_lag = 0.0
+        ss.Dbeg[i_fix,:,1:] = 0.0 # none with a_lag > 0.0  
 
     ################################################
     # 3. initial guess for intertemporal variables #

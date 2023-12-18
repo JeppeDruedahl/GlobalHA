@@ -40,26 +40,13 @@ class HANCModelClass(EconModelClass,GEModelClass):
         self.shocks = ['Z'] # exogenous inputs
         self.unknowns = ['K','q'] # endogenous inputs
         self.targets = ['clearing_A','foc_inv'] # targets
-        
-        self.varlist = [ # all variables
-            'A_hh',
-            'A',
-            'C_hh',
-            'C',
-            'clearing_A',
-            'clearing_C',
-            'foc_inv',
-            'inv',
-            'K',
-            'L',
-            'q',
-            'r',
-            'rk',
-            'u',
-            'w',
-            'Y',
-            'Z',
+        self.blocks = [
+            'blocks.block_pre',
+            'hh',
+            'blocks.block_post',
         ]
+        
+  
 
         self.solve_hh_backwards = household_problem.solve_hh_backwards
         self.block_pre = blocks.block_pre
